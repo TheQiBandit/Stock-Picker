@@ -1,9 +1,23 @@
+
+
 def stock_picker(price_array)
-  min_value = price_array.reduce do |min, price|
-    price < min ? price : min
+  profit = 0
+  best_days = [nil, nil]
+
+  price_array.each_with_index do |buy_price, buy_day|
+    price_array.each_with_index do |sell_price, sell_day|
+      if (sell_day > buy_day && sell_price - buy_price > profit)
+        profit = sell_price - buy_price
+        best_days = [buy_day, sell_day]       
+      end
+    end
   end
-  price_array.find_index(min_value)
+    
+  
+best_days
 end
 
-prices = [17, 3, 6, 9, 15, 20, 1, 10, 16, 2, 19, 3]
+prices = [17, 3, 6, 2, 9, 15, 8, 6, 1, 10, 21, 19]
 pp stock_picker(prices)
+
+
